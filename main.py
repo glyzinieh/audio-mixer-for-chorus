@@ -6,6 +6,14 @@ def change_page(page):
     #pageを最前にする
     page.tkraise()
 
+file_list = {}
+
+def file_select_click(i):
+    global file_list
+    file_list[i] = {}
+    file_list[i]["path"] = filedialog.askopenfilename()
+    print(file_list)
+
 def main():
     #windowを生成
     root=tk.Tk()
@@ -17,10 +25,18 @@ def main():
     
     #----------File Select----------
     file_select_page = ttk.Frame(root)
-    button = {}
+    file_select_widget = {}
     for i in range(4):
-        button[i] = ttk.Button(file_select_page,text="send",command=lambda:change_page(select_mix_page))
-        button[i].pack()
+        file_select_widget[i] = {}
+        file_select_widget[i]["frame"] = ttk.Frame(file_select_page)
+        file_select_widget[i]["box"] = ttk.Entry(file_select_widget[i]["frame"])
+        file_select_widget[i]["button"] = ttk.Button(file_select_widget[i]["frame"],text="参照",command=lambda:file_select_click(i))
+        file_select_widget[i]["name"] = ttk.Entry(file_select_widget[i]["frame"])
+        file_select_widget[i]["box"].pack(side=tk.LEFT)
+        file_select_widget[i]["button"].pack(side=tk.LEFT)
+        file_select_widget[i]["name"].pack(side=tk.LEFT)
+        file_select_widget[i]["frame"].pack(side=tk.TOP)
+        
     file_select_page.grid(row=0,column=0,sticky="nsew")
 
     #----------Select Mix----------
